@@ -1,0 +1,6 @@
+22.02.2026
+1.
+Implement Barbie background, and make sure the actors and the jump, move steps are alligned with the background in position and size.
+
+2.
+Paste in the Barbie background.
