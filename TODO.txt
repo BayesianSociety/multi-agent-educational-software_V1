@@ -4,3 +4,24 @@ Implement Barbie background, and make sure the actors and the jump, move steps a
 
 2.
 Paste in the Barbie background.
+
+Correct the following:
+• 1. High: Layer 2 backend/DB requirements conflict with Layer 0 “no accounts/local-only persistence” and create
+     contradictory implementation paths.
+     Prompt_4_project_brief.txt:6 says no accounts and local-only persistence, but Prompt_4_project_brief.txt:43,
+     Prompt_4_project_brief.txt:46, and Prompt_4_project_brief.txt:51 require backend + SQLite + Docker-based test DB
+     for MVP. Then Prompt_4_project_brief.txt:50 says SQLite progress only if accounts exist. This is internally
+     inconsistent and can cause agents to produce incompatible architectures.
+  2. Medium: Level storage is still ambiguous (“OR choose ONE”), which weakens deterministic generation.
+     Prompt_4_project_brief.txt:48 allows JSON levels or SQLite levels. That unresolved branch can lead to diverging
+     agent outputs and unstable validators across runs.
+  3. Medium: ARCHITECTURE_PROMPTS.md is required in narrative but not included in required outputs/validators.
+     The requirement exists at Prompt_4_separate_pipeline_engine_from_project_pack.txt:414, but required outputs list
+     at Prompt_4_separate_pipeline_engine_from_project_pack.txt:71 and validator sections do not appear to enforce
+     existence/content for that artifact. Result: requirement can be silently skipped.
+  4. Low: README run command likely mismatches the hardened compatibility model in the spec.
+     README.md:2 uses codex exec --full-auto --json -o ..., while the engine spec emphasizes feature detection/
+     fallback around different optional flags and a minimal compatible command (codex exec --sandbox workspace-write
+     -) at Prompt_4_separate_pipeline_engine_from_project_pack.txt:45 and
+     Prompt_4_separate_pipeline_engine_from_project_pack.txt:55. This can cause user-facing startup failures
+     depending on CLI version.
