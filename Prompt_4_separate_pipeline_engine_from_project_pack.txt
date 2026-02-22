@@ -411,6 +411,10 @@ Variant source:
 - Prompt mapping trace artifact is required per run:
   - write `/.orchestrator/runs/<run_id>/prompt_map.json`
   - include, for each step: agent role, variant id, variant source path/name, and prompt_epoch_id.
+- Add requirement to produce ARCHITECTURE_PROMPTS.md explaining:
+	- where sub-prompts are loaded
+	- where selected (prompt_variants_for_agent, select_variant)
+	- where assembled (build_step_prompt).
 
 Deterministic prompt epoching (prevents stale stats)
 - Compute prompt_epoch_id as a SHA-256 over the loaded variant contents:

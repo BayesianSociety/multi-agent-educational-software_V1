@@ -48,7 +48,7 @@ cat Prompt_4_separate_pipeline_engine_from_project_pack.txt Prompt_4_project_bri
   That is the full set explicitly present in the two files.
   
   
-# quality
+# quality - this is a very good point for Framework_for_quality_evaluation
   What would raise product-quality confidence:
 
   1. Add behavior-focused validators

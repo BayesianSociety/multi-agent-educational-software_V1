@@ -1,0 +1,218 @@
+1.
+No description and verbose of what the orchestrator.py is doing
+- silent execution
+- no status information
+- verbose mode - provide step - by - step  logs of its internal actions
+
+2.
+Make Writable sessions
+
+3. 
+Provide description on how to run the app
+
+4. 
+Use only the latest version of Next.js
+
+5.
+Solve release_engineer problem
+
+6. 
+From full prompt, prepare sub prompts for individual agents such as designer, frontend or backend
+
+7.
+Compare orchestrator.py to multi_agent_workflow_deterministic_ver3_finance.py and explain why there are more prompts in multi_agent_workflow_deterministic_ver3_finance.py agent specific then in orchestrator. Also explain which setup is better and more modular. And where in orchestrator.py the subagents recieive their sub prompts.
+
+8.
+- Use .orchestrator logs to analyse the failures
+- See which part of the code in orchestrator.py code is responsible for those failures
+- See which part of Prompt_4 is responsible for building in those failures into orchestrator.py
+
+9.
+Orchestrator.py does not use a single fixed prompt per role. It builds a set of candidate prompts (“variants”) for each agent step, then chooses one variant each run using a policy. I want to have a step logged and writen to a file for each agent step.
+
+10.
+Add a schema-constrained planning step before specialists
+- Why: forces coherent role/output contracts up front.
+
+Pass a hashed manifest snapshot into every specialist prompt
+- Why: improves reproducibility and reduces silent drift in what agents assume exists.
+
+Run independent steps in parallel with one combined policy check
+- Why: faster generation and cleaner separation of independent concerns.
+
+Add explicit docs/runbook deliverables as first-class artifacts
+- Why: complete app output, not just code skeleton.
+
+Add pluggable “data-specialist” role pattern
+- Why: enables stronger app creation for data-heavy projects (scan/index/normalize before UI/API).
+
+11. 
+The frontend of the application flow must utilize the created backend.
+
+codex resume 019c7279-fc36-7bd1-8b1a-40d32a011a0f
+
+
+Final recommendations:
+• Strong alignment overall. Your added recommendations mostly extend observability, startup UX, and product
+  coupling; mine covered determinism/reliability gaps found in .orchestrator logs.
+  Below is the combined, prioritized final change set for the two files.
+
+  1) Prompt_4_separate_pipeline_engine_from_project_pack.txt (engine spec)
+  Add/adjust these sections.
+
+  1. Codex CLI Compatibility + Release Engineer hardening
+
+  - Extend compatibility detection to include approval/config flags, not only --experimental-json / --output-
+    schema.
+  - Require fallback command when unsupported flags are detected.
+  - Add deterministic retry for transient transport failures.
+
+  Use this block:
+
+  [Design A] Codex CLI compatibility hardening (required)
+  - Orchestrator MUST feature-detect optional flags before use (including approval/config related flags).
+  - If a flag is unsupported, orchestrator MUST omit it and use a minimal compatible command:
+    codex exec --sandbox workspace-write -
+  - Unsupported flag usage MUST produce deterministic error code: CODEX_CLI_FLAG_UNSUPPORTED.
+  - Transport/network transient failures (e.g. "stream disconnected", "error sending request", "channel closed")
+  MUST trigger bounded in-attempt retries (default 2) before marking step failed.
+  - Transport failures MUST NOT tighten policy constraints or variant penalties.
+
+  2. Execution modes + status visibility (silent + verbose)
+
+  [Design A] Runtime verbosity modes (required)
+  - Add CLI flags:
+    - --quiet: only final summary/errors
+    - --verbose: step-by-step internal status logs
+  - In verbose mode, log: step start/end timestamps, selected variant id, retry index, changed paths count,
+  validator result, rollback action.
+
+  3. Per-step durable logs as files (explicit)
+
+  [Design A] Per-step artifact logging (required)
+  - For each step attempt write:
+    /.orchestrator/runs/<run_id>/steps/<step_name>/attempt_<n>.json
+    containing:
+    - prompt_variant_id
+    - prompt_epoch_id
+    - retry_index
+    - exit_code
+    - changed_paths
+    - allowlist/invariant/cap errors
+    - validator error_codes
+    - rollback_applied (bool)
+  - Keep existing JSONL summaries; this is additional step-scoped detail.
+
+  4. Prompt ownership + contract drift prevention
+
+  - Remove TEST.md write access from frontend, backend, docs.
+  - Keep TEST.md writable only by release_engineer bootstrap and qa.
+  - Add “artifact skeleton contract” checks immediately after requirements/QA steps (not only end-of-run).
+
+  5. Schema planning + manifest + parallel + data-specialist (from #10)
+     Add these required capabilities:
+
+  [Design A] Pre-specialist planning step (required)
+  - Add step: planner
+  - Planner MUST emit schema-constrained plan JSON (if --output-schema supported; otherwise deterministic JSON
+  validator).
+  - Plan must define roles, required outputs, dependencies.
+
+  [Design A] Prompt manifest injection (required)
+  - Before each step, inject a hashed manifest snapshot (selected files + SHA256) into the step prompt.
+  - Specialists are instructed to treat manifest as read-only context.
+
+  [Design A] Parallel execution (optional but supported)
+  - Allow parallel runs only for dependency-disjoint steps.
+  - Must apply a single combined post-run gating check across all parallel changes.
+
+  [Design A] Data-specialist role pattern (optional module)
+  - Support optional data_scanner/data_ingest step with strict allowlist and schema validation of produced index
+  artifacts.
+
+  6. Docs/runbook as first-class deliverables + app startup instructions
+
+  [Design A] Documentation outputs (required)
+  - Add required outputs: README.md and RUNBOOK.md.
+  - README.md MUST include:
+    - how to start frontend
+    - how to start backend
+    - whether frontend depends on backend at runtime
+    - how to run tests
+
+  7. Frontend-backend utilization validator
+
+  [Layer 2] Runtime integration validator (if backend_required=true)
+  - Frontend must call at least one backend endpoint at runtime.
+  - Deterministic evidence: fetch/HTTP client reference to backend route(s) OR documented route-handler
+  architecture if frontend hosts backend endpoints.
+  - If backend is required and no integration evidence exists: BACKEND_UNUSED violation.
+
+  8. Prompt variants and sub-prompts clarity
+
+  - Keep variant system.
+  - Require role-specific prompt files/templates per agent (or embedded equivalents) and log chosen prompt id each
+    step.
+  - Add requirement to produce ARCHITECTURE_PROMPTS.md explaining:
+      - where sub-prompts are loaded
+      - where selected (prompt_variants_for_agent, select_variant)
+      - where assembled (build_step_prompt).
+
+  ———
+
+  2) Prompt_4_project_brief.txt (project pack/brief)
+  Tighten Layer 2 so generation is coherent and testable.
+
+  1. Remove architecture ambiguity
+
+  - Choose one backend placement model (don’t keep “OR”).
+  - Choose one data source model for MVP (JSON levels vs DB-authoritative).
+
+  2. Enforce frontend uses backend
+     Add:
+
+  - Frontend MUST consume backend APIs for level/content retrieval in runtime flow.
+  - Minimum required endpoints:
+    - GET /health
+    - GET /api/levels
+    - GET /api/levels/:id
+
+  3. DB requirement realism
+
+  - If DB is truly required for MVP, keep PostgreSQL and require integration startup + tests using it.
+  - If not required for MVP gameplay, mark DB as optional and avoid forcing docker-compose for every test path.
+
+  4. Run instructions requirement
+     Add:
+
+  - Deliverable docs must include exact startup commands:
+    - frontend dev
+    - backend start
+    - test command
+    - optional docker compose command(s)
+
+  5. Next.js version policy
+     Replace vague versioning with deterministic rule:
+
+  - Frontend framework: Next.js latest stable major at generation time, pinned in package.json and lockfile.
+  - Resolved version MUST be recorded in README and/or run manifest.
+
+  6. Agent task brief linkage
+     Add:
+
+  - AGENT_TASKS.md MUST include an explicit "Project Brief constraints" section referencing Layer 0–2 decisions.
+
+  7. Optional project brief config (PROJECT_BRIEF.yaml) knobs
+     Include deterministic knobs:
+
+  {
+    "project_type": "scratch_like_game",
+    "backend_required": true,
+    "tests": {
+      "command_source": "profile",
+      "commands": ["npm --prefix frontend run test"]
+    },
+    "validators": {
+      "require_frontend_backend_integration": true
+    }
+  }
