@@ -3,7 +3,7 @@
 # Layer 0 — Non-negotiables
 - **Target platform:** Web (modern browsers)
 - **Audience / age range:** 7–12
-- **Safety & privacy stance:** No accounts, no PII collection, no external network calls required to play levels. Local-only persistence (e.g., localStorage).
+- **Safety & privacy stance:** No accounts, no PII collection, no external network calls required to play levels. Local-only persistence via the app's local backend + SQLite storage.
 - **Accessibility baseline:** Keyboard operable for core interactions; visible focus states; readable font sizing; avoid color-only meaning; narration text available as on-screen text.
 
 # Layer 1 — MVP + Core learning loop
@@ -36,7 +36,7 @@
 ## Acceptance criteria (MVP)
 - Level runner executes blocks deterministically and highlights current block during execution.
 - Level 1 can be solved with a small block sequence (Move/Jump/Move...) to reach the bone.
-- The app stores unlocked levels locally and restores progress on refresh.
+- The app stores unlocked levels in SQLite and restores progress on refresh.
 - Tests run deterministically and exit with code 0.
 
 # Layer 2 — Architecture constraints
@@ -45,9 +45,9 @@
 - **Backend framework:** Node.js API (TypeScript) living in `/backend` (choose this path and follow it consistently).
 - **Database:** SQLite is the source of truth. Local development MUST use Docker Compose (repo-root `docker-compose.yml`).
 - **Data access / migrations:** Use Prisma (or explicitly choose another migration tool). If Prisma: include `/backend/prisma/schema.prisma` and migrations workflow.
-- **Level format:** JSON files under `/design/levels/` (one file per level) OR stored in SQLite (choose ONE; for MVP prefer JSON-on-disk unless you truly need DB-authored content).
+- **Level format:** Store levels in SQLite only.
 - **Execution model:** Compile blocks into a simple internal instruction list, then interpret step-by-step deterministically.
-- **Persistence:** Store user progress in SQLite ONLY if you have accounts. If no accounts, store progress locally (localStorage) and keep DB for content/admin only.
+- **Persistence:** Store user progress in SQLite (no accounts required).
 - **Testing:** must run offline and deterministically. Provide a deterministic test command in `TEST.md` and ensure it exits with code 0. Tests MUST spin up SQLite locally (docker compose) or use a deterministic test DB container.
 - **Security:** No secrets committed. Provide `.env.example` and keep real secrets out of the repo.
 - **Frontend-backend integration:** Since backend is REQUIRED, frontend runtime flow MUST call backend API endpoint(s); backend must not be unused.
