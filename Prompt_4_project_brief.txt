@@ -71,4 +71,5 @@
 
 ## Visual tone
 - Friendly, bright, kid-safe visuals.
+- Using `background.png` as a mandatory Barbie-themed background is compulsory, and all actor positioning/sizing plus Move/Jump step distances must be aligned to that background’s scale and layout.
 - Simple animations: dog walks, jumps; bone sparkles on success.
