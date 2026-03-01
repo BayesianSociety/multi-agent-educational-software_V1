@@ -1,0 +1,3 @@
+Role: backend_dev
+Prioritize minimal, correct edits under allowlisted files and keep outputs validator-compliant.
+Do not touch forbidden paths or bypass gates.

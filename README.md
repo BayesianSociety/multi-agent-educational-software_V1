@@ -1,30 +1,19 @@
-# multi-agent-educational-software_V1
+# Multi-Agent Educational Software V1
 
-## Run frontend
-```bash
-cd frontend
-npm run dev
-```
+## Frontend
+- `cd frontend`
+- `npm install`
+- `npm run dev`
 
-## Run backend
-```bash
-cd backend
-npm run dev
-```
+## Backend
+- `cd backend`
+- `npm install`
+- `npm run dev`
 
-## Run tests
-```bash
-# deterministic commands are defined in TEST.md
-docker compose up -d
-docker compose ps
-```
+## Tests
+- `python3 -m unittest discover -s tests -p 'test_*.py'`
 
-## Optional docker compose usage
-```bash
-docker compose up -d
-```
+## Docker Compose (optional)
+- `docker compose up --build`
 
-## Orchestrator
-```bash
-python3 orchestrator.py --mode B --verbose
-```
+The frontend must call backend endpoints (`/health`, `/api/levels`, `/api/levels/:id`) and backend uses SQLite.

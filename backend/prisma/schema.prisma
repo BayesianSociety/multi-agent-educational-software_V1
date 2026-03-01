@@ -1,0 +1,20 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Level {
+  id        Int    @id @default(autoincrement())
+  title     String
+  narrative String
+  data      String
+}
+
+model Progress {
+  id            Int @id @default(autoincrement())
+  unlockedLevel Int
+}

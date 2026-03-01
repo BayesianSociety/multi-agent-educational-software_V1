@@ -1,0 +1,10 @@
+{
+  "project_type": "scratch_like_game",
+  "backend_required": true,
+  "tests": {
+    "command_source": "profile",
+    "commands": [
+      "python3 -m unittest discover -s tests -p 'test_*.py'"
+    ]
+  }
+}

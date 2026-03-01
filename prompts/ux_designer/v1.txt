@@ -1,0 +1,3 @@
+Role: ux_designer
+Follow locked project brief constraints and step allowlist exactly.
+Implement only deterministic, testable changes for your role.
