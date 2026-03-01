@@ -96,3 +96,110 @@ Say if the background.png is enforced:
 
   So: the requirement exists and is propagated via the brief, but it is not explicitly encoded in per-role prompt
   text or enforced by a dedicated validator for frontend behavior.
+  
+  
+› Explain if those prompts in directories such as here:
+        - prompts/frontend_dev/v1.txt:1:1
+        - prompts/frontend_dev/v2.txt:1:1
+        - prompts/ux_designer/v1.txt:1:1
+  such as in .codex/skills, if those prompts and skills are going to be expanded by the orchestrator.py into
+  fully functional instead of the current placeholders?
+  
+• Short answer: no, not automatically.
+
+  - orchestrator.py does not expand placeholder prompt files into richer role prompts by itself. It reads the text
+    as-is and uses it directly as variant_text in the step prompt:
+      - orchestrator.py:1126:1126
+      - orchestrator.py:1134:1134
+      - orchestrator.py:1136:1136
+  - If prompt/skill files are missing, bootstrap only creates minimal placeholders (exactly what you’re seeing),
+    not full domain-specific content:
+      - orchestrator.py:1310:1310
+      - orchestrator.py:1328:1328
+      - orchestrator.py:1335:1335
+  - In Design B, prompts under /prompts/<role>/*.txt are used as variants; in Design A they are not used:
+      - orchestrator.py:469:469
+      - orchestrator.py:478:478
+  - /.codex/skills/** are not “expanded” either; they are mainly guarded/validated (size/front matter/forbidden
+    strings) and included in prompt-epoch hashing:
+      - orchestrator.py:764:764
+      - orchestrator.py:492:492
+  - The only path that can improve placeholders is the optional prompt_tuner step in Design B, which is itself
+    agent-generated and eval-gated; if it doesn’t improve score, changes are reverted:
+      - orchestrator.py:1456:1456
+      - orchestrator.py:1490:1490
+
+  So: placeholders stay placeholders unless you (or the prompt tuner step) explicitly edit them.
+  
+› Are those prompts and skills used later by the orchestrator or any other agents?
+
+• Yes, with an important distinction:
+
+  - /prompts/** are used later by the orchestrator in Design B as prompt variants for each step:
+      - orchestrator.py:464:464
+      - orchestrator.py:469:469
+      - orchestrator.py:1126:1126
+  - /.codex/skills/** are not injected as step prompt text by orchestrator.py. They are used for:
+      - prompt epoch hashing/state tracking: orchestrator.py:492
+      - guardrail validation: orchestrator.py:764
+      - optional prompt-tuner edits in Design B: orchestrator.py:1456
+  - I don’t see any other runtime component in this repo consuming these paths besides orchestrator.py (and the
+    prompt-spec docs). So practically: prompts are directly used to drive agent runs; skills are used as governed
+    library metadata/content, not directly expanded into each agent prompt by this orchestrator implementation.
+	
+› Does the orchestrator create subagents?
+
+• Yes.
+
+  orchestrator.py runs multiple specialist agent steps by spawning separate codex exec subprocess calls, one per
+  step/attempt, which is effectively its “subagent” mechanism.
+
+  - Step orchestration is defined in make_steps:863.
+  - Each step is executed in run_single_step:1110, which builds a role-specific prompt and then calls Codex.
+  - The actual subprocess spawn happens in run_codex_with_retry:959 via cmd = ["codex", "exec", ...].
+
+  So it does create agent-like workers, but as independent CLI subprocess executions rather than in-process Python
+  agent objects.
+  
+› Do those agents cooperate with each other?
+
+• Only indirectly.
+
+  They do not chat or coordinate directly agent-to-agent. The orchestrator runs them sequentially as separate
+  codex exec calls, and each one sees/edits shared repo state plus the project brief and allowlists.
+
+  - Sequential step pipeline: make_steps:863, loop in main:1398
+  - Per-step isolated execution via subprocess: run_single_step:1110, run_codex_with_retry:959
+  - Shared coordination mechanism is files + validators, not direct communication.
+
+  So: cooperation exists through handoff via files and enforced workflow, not through live inter-agent
+  collaboration.
+  
+  
+› Do those agents have their own prompts and skills, and who updates them? The currently existing ones in prompts
+  directory are very weak.
+  
+• Yes, each role has its own prompt/skill slots, but currently they are mostly placeholders.
+
+  - Role prompts:
+      - In Design B, orchestrator loads per-role files from /prompts/<role>/*.txt as variants (for example
+        prompts/frontend_dev/v1.txt, v2.txt).
+      - Source: orchestrator.py:464, orchestrator.py:469
+  - Role skills:
+      - Stored under /.codex/skills/<role>/SKILL.md.
+      - They are validated and included in prompt-epoch hashing, but not directly expanded into the step prompt
+        body by this orchestrator implementation.
+      - Source: orchestrator.py:492, orchestrator.py:764
+
+  Who updates them:
+
+  - Bootstrap (bootstrap_required_artifacts) only creates minimal defaults if missing; it does not make them
+    strong.
+      - orchestrator.py:1310:1310
+  - Prompt Tuner step (Design B) is the automated updater allowed to edit /prompts/** and /.codex/skills/**.
+      - orchestrator.py:1456:1456
+      - If tuning doesn’t improve score, changes are reverted: orchestrator.py:1490
+  - You can also update them manually in-repo.
+
+  So your assessment is correct: the current files are weak placeholders unless you or the prompt-tuner improves
+  them.  
