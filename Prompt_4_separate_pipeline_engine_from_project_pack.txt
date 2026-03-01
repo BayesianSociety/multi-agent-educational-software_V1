@@ -411,15 +411,32 @@ Variant source:
 - Prompt mapping trace artifact is required per run:
   - write `/.orchestrator/runs/<run_id>/prompt_map.json`
   - include, for each step: agent role, variant id, variant source path/name, and prompt_epoch_id.
+  - `prompt_map.json` MUST additionally include, per step:
+    - `skill_path`
+    - `skill_hash`
+    - `skill_used` (true/false)
+    - `skill_excerpt_mode` (`full` or `truncated`)
 - Add requirement to produce ARCHITECTURE_PROMPTS.md explaining:
 	- where sub-prompts are loaded
 	- where selected (prompt_variants_for_agent, select_variant)
 	- where assembled (build_step_prompt).
+- Skill injection is mandatory per specialist step:
+- Resolve role skill path as `/.codex/skills/<agent>/SKILL.md` (agent key normalized the same way as prompt
+variant lookup).
+- If the skill file exists, parse YAML front matter, then include the skill BODY verbatim (or deterministic
+excerpt with truncation marker) inside the specialist step prompt.
+- The assembled step prompt MUST contain both:
+  1) selected role prompt variant text, and
+  2) resolved role skill instructions.
+- If skill file is missing, continue deterministically with variant-only prompt and log `skill_used=false`.
+
 
 Deterministic prompt epoching (prevents stale stats)
 - Compute prompt_epoch_id as a SHA-256 over the loaded variant contents:
   - [Design A] hash the resolved templates actually used (embedded or /.orchestrator/prompt_templates)
-  - [Design B] additionally include hashes of /.codex/skills/** that are loaded/used
+  - [Design B] `prompt_epoch_id` MUST hash:
+      - selected variant content hash
+      - resolved role skill content hash (or literal `NO_SKILL` when absent)
 - Track stats per (agent_role, prompt_epoch_id).
 - If prompt_epoch_id changes, selection resets to BOOTSTRAP (round-robin) for that role+epoch.
 
@@ -533,6 +550,9 @@ High-level loop (implemented by Python orchestrator)
   - must start with YAML front matter (--- ... ---)
   - required keys: name, description
   - max file size: 64 KB
+  - Skill body quality requirements:
+  - must contain explicit role instructions (not only metadata)
+  - must not be empty after front matter
   - forbidden substrings (case-insensitive) must NOT appear:
     - "ignore validators"
     - "bypass allowlists"

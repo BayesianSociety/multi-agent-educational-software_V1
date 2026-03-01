@@ -1,1 +1,0 @@
-Minimal deterministic variant: keep edits small, no forbidden path touches.

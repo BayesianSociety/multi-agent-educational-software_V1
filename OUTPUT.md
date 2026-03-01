@@ -266,3 +266,19 @@ Say if the background.png is enforced:
   when present.
 
   But best practice is to keep this only in Prompt_4_separate_pipeline_engine_from_project_pack.txt.
+  
+› Can you also tell if both the orchestrator and all the specific agents make use of their own specific prompts?
+
+• Yes, with mode-dependent behavior.
+
+  - In Design B (--mode B), each step/agent role uses its own prompt directory: /prompts/<normalized_role>/*.txt,
+    loaded by role and selected per attempt:
+      - loader: orchestrator.py:464
+      - Design B prompt path usage: orchestrator.py:469
+      - per-step prompt selection/assembly: orchestrator.py:1126, orchestrator.py:1134, orchestrator.py:1136
+  - In Design A (--mode A), they do not use /prompts/**; they fall back to orchestrator templates/internal
+    variants:
+      - fallback paths: orchestrator.py:478, orchestrator.py:486
+  - So: the orchestrator does route prompts role-by-role, and agents use role-specific prompt files in Design B.
+  - Caveat: your current files are mostly placeholder text, so they are role-scoped but not strongly role-detailed
+    yet

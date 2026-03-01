@@ -1,1 +1,0 @@
-Deterministic role variant: edit only allowlisted paths and satisfy validators.
