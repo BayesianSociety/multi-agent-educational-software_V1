@@ -203,3 +203,66 @@ Say if the background.png is enforced:
 
   So your assessment is correct: the current files are weak placeholders unless you or the prompt-tuner improves
   them.  
+  
+› Are the skills used at all?
+• Mostly no, not as direct specialist instructions in this implementation.
+
+  - What is used directly for specialist runs is /prompts/<role>/*.txt (Design B), injected into each step prompt:
+      - orchestrator.py:469:469
+      - orchestrator.py:1134:1134
+  - /.codex/skills/** are used by orchestrator for:
+      - epoch hashing/state tracking: orchestrator.py:492
+      - guardrail validation: orchestrator.py:764
+      - optional prompt-tuner editing scope: orchestrator.py:1459
+
+  So, from orchestrator.py, skills are managed/validated/tracked, but not explicitly fed as role instructions to
+  the specialist agents.
+
+
+› Explain what needs to be put into Prompt_4_separate_pipeline_engine_from_project_pack.txt or
+  Prompt_4_project_brief.txt for the skills to be explicityly fed as role instructions to the specialist agents,
+  without changing or breaking anything else in those files.
+  
+  • Put it in Prompt_4_separate_pipeline_engine_from_project_pack.txt, not in Prompt_4_project_brief.txt (that brief
+  is product requirements, not orchestrator mechanics).
+
+  Add these minimal spec lines (copy-paste) into the existing prompt architecture section near “Per-agent sub-
+  prompts MUST be explicit”:
+
+  - Skill injection is mandatory per specialist step:
+    - Resolve role skill path as `/.codex/skills/<agent>/SKILL.md` (agent key normalized the same way as prompt
+  variant lookup).
+    - If the skill file exists, parse YAML front matter, then include the skill BODY verbatim (or deterministic
+  excerpt with truncation marker) inside the specialist step prompt.
+    - The assembled step prompt MUST contain both:
+      1) selected role prompt variant text, and
+      2) resolved role skill instructions.
+    - If skill file is missing, continue deterministically with variant-only prompt and log `skill_used=false`.
+
+  Add this in the prompt-map/trace artifact requirements section:
+
+  - `prompt_map.json` MUST additionally include, per step:
+    - `skill_path`
+    - `skill_hash`
+    - `skill_used` (true/false)
+    - `skill_excerpt_mode` (`full` or `truncated`)
+
+  Add this in deterministic epoching section (replace/extend current skills-hash wording):
+
+  - In Design B, `prompt_epoch_id` MUST hash:
+    - selected variant content hash
+    - resolved role skill content hash (or literal `NO_SKILL` when absent)
+
+  Add this in guardrails section for skills:
+
+  - Skill body quality requirements:
+    - must contain explicit role instructions (not only metadata)
+    - must not be empty after front matter
+
+  If you still want a line in Prompt_4_project_brief.txt, keep it one non-invasive sentence under architecture
+  constraints:
+
+  - Orchestrator prompt assembly must include role-specific instructions from `/.codex/skills/<agent>/SKILL.md`
+  when present.
+
+  But best practice is to keep this only in Prompt_4_separate_pipeline_engine_from_project_pack.txt.
