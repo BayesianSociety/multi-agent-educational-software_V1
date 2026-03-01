@@ -282,3 +282,7 @@ Say if the background.png is enforced:
   - So: the orchestrator does route prompts role-by-role, and agents use role-specific prompt files in Design B.
   - Caveat: your current files are mostly placeholder text, so they are role-scoped but not strongly role-detailed
     yet
+	
+	
+codex resume 019cab5a-262d-7f51-a03f-e579e2f6060b
+codex resume 019ca8f2-de6b-7060-976c-7015cb27acab
