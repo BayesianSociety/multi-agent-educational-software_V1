@@ -70,3 +70,29 @@ Reading prompt from stdin...
 {"type":"item.completed","item":{"id":"item_41","type":"reasoning","text":"**Summarizing read confirmation**"}}
 {"type":"item.completed","item":{"id":"item_42","type":"agent_message","text":"Implemented the spec scaffold and core engine in-repo.\n\n### What I changed\n- Added full orchestrator implementation: [orchestrator.py](/home/postnl/multi-agent-educational-software_V1/orchestrator.py)\n- Added locked brief artifacts:\n  - [PROJECT_BRIEF.md](/home/postnl/multi-agent-educational-software_V1/PROJECT_BRIEF.md)\n  - [PROJECT_BRIEF.yaml](/home/postnl/multi-agent-educational-software_V1/PROJECT_BRIEF.yaml)\n- Added required docs:\n  - [REQUIREMENTS.md](/home/postnl/multi-agent-educational-software_V1/REQUIREMENTS.md)\n  - [TEST.md](/home/postnl/multi-agent-educational-software_V1/TEST.md)\n  - [AGENT_TASKS.md](/home/postnl/multi-agent-educational-software_V1/AGENT_TASKS.md)\n  - [README.md](/home/postnl/multi-agent-educational-software_V1/README.md)\n  - [RUNBOOK.md](/home/postnl/multi-agent-educational-software_V1/RUNBOOK.md)\n  - [AGENTS.md](/home/postnl/multi-agent-educational-software_V1/AGENTS.md)\n  - [ARCHITECTURE_PROMPTS.md](/home/postnl/multi-agent-educational-software_V1/ARCHITECTURE_PROMPTS.md)\n- Added required directories and starter files:\n  - `/design`, `/frontend`, `/backend`, `/tests`\n  - `/prompts/**`, `/.codex/skills/**`\n  - [docker-compose.yml](/home/postnl/multi-agent-educational-software_V1/docker-compose.yml), [.env.example](/home/postnl/multi-agent-educational-software_V1/.env.example), [.gitignore](/home/postnl/multi-agent-educational-software_V1/.gitignore)\n\n### Verification run\n- `python3 -m py_compile orchestrator.py` passed.\n- `python3 orchestrator.py --help` works.\n\n### Notes\n- I did **not** run the full orchestration pipeline yet (it would execute live `codex exec` specialist steps).  \n- Current repo now has all required baseline artifacts so you can run:\n  - `python3 orchestrator.py --mode B --verbose`\n\n"}}
 {"type":"turn.completed","usage":{"input_tokens":414762,"cached_input_tokens":378368,"output_tokens":21801}}
+
+
+
+Say if the background.png is enforced:
+• Partially.
+
+  - The condition is explicitly present in the project brief source:
+      - PROJECT_BRIEF.md:70:70 says background.png is mandatory and actor sizing/positioning plus Move/Jump
+        distances must align to it.
+      - The source prompt also contains it at Prompt_4_project_brief.txt:74.
+  - The orchestrator does pass this condition into agent prompts:
+      - orchestrator.py:842:842 reads a brief excerpt.
+      - orchestrator.py:858:858 injects that brief excerpt into every built step prompt.
+      - So the requirement is included indirectly through the brief, not hardcoded as a dedicated frontend rule in
+        the prompt template text.
+  - The role prompt files themselves do not explicitly mention background.png or “reflect items on the
+    background”:
+      - prompts/frontend_dev/v1.txt:1:1
+      - prompts/frontend_dev/v2.txt:1:1
+      - prompts/ux_designer/v1.txt:1:1
+  - There is no strict validator that enforces this specific background alignment condition:
+      - brief validation only checks generic headings/keywords at orchestrator.py:62 and orchestrator.py:67,
+        implemented in orchestrator.py:636.
+
+  So: the requirement exists and is propagated via the brief, but it is not explicitly encoded in per-role prompt
+  text or enforced by a dedicated validator for frontend behavior.
