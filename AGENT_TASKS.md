@@ -1,22 +1,30 @@
 # Agent Tasks
-Project Brief reference: All specialists must follow PROJECT_BRIEF.md (locked after bootstrap).
+Project Brief reference: all specialists must follow `PROJECT_BRIEF.md` (Layer 0-2 locked source of truth).
 
 ## Requirements
-- Map Layer 0-2 constraints into explicit functional and non-functional requirements.
-- Keep acceptance criteria deterministic and testable.
+- Map Layer 0-2 constraints into explicit, testable requirements in `REQUIREMENTS.md`.
+- Preserve required headings and deterministic acceptance criteria.
 
 ## Designer
-- Define /design UX flows for palette/workspace/play area and single-sequence snapping.
-- Specify Level 1/2 tutorial progression and narrative text aligned with Project Brief.
+- Define UX flows for block palette, workspace sequencing, run feedback, and retry loop.
+- Specify tutorial clarity for Level 1 (`Move`) and Level 2 (`Jump`) with simple narrative text.
 
 ## Frontend
-- Implement editor, run/reset controls, block highlight during execution.
-- Integrate frontend runtime calls to backend level endpoints from Project Brief.
+- Implement block editor and Run/Reset controls with current-block highlighting during deterministic execution.
+- Ensure keyboard-operable core interactions and visible focus states.
+- Integrate with backend endpoints for level retrieval/progression.
 
 ## Backend
 - Implement GET /health, GET /api/levels, GET /api/levels/:id.
-- Implement SQLite persistence for levels and unlocked progress.
+- Implement SQLite persistence for level data and unlocked progress restoration.
+- Keep execution and endpoint behavior deterministic for offline tests.
 
 ## QA
 - Author deterministic tests for execution, endpoint contracts, and persistence behavior.
-- Maintain TEST.md commands and ensure deterministic exit code 0.
+- Maintain test commands in `TEST.md` and enforce deterministic exit code `0`.
+
+## Release
+- Maintain release-facing docs (`README.md`, `RUNBOOK.md`, `TEST.md`) with deterministic, offline validation commands.
+- Maintain local-first startup in repo-root `docker-compose.yml` for frontend + backend + SQLite workflow.
+- Ensure `.env.example` contains only local-safe defaults and no secrets.
+- Ensure `.gitignore` excludes local env files, SQLite artifacts, and dependency directories.

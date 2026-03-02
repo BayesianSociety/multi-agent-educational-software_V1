@@ -1,0 +1,22 @@
+{
+  "attempt": 1,
+  "changed_bytes": 0,
+  "changed_files": 2,
+  "changed_paths": [
+    "REQUIREMENTS.md",
+    "RUNBOOK.md"
+  ],
+  "deleted_files": 0,
+  "exit_code": 0,
+  "fixer_runs": 0,
+  "jsonl_temp": "/tmp/codex_jsonl_dkxkt1i2",
+  "prompt_epoch_id": "977020964736deeab7fd1e57ccf7ea856d7da49cc9c30819b2d4919e30007136",
+  "rollback": false,
+  "stderr_temp": "/tmp/codex_err_u4257tqj",
+  "stdout_temp": "/tmp/codex_out_luq08t2w",
+  "step": "release_engineer",
+  "success": true,
+  "transient_retries": 0,
+  "validation_codes": [],
+  "variant_id": "v2"
+}

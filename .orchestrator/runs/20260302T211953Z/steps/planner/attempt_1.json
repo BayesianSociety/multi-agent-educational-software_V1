@@ -1,0 +1,19 @@
+{
+  "attempt": 1,
+  "changed_bytes": 0,
+  "changed_files": 0,
+  "changed_paths": [],
+  "deleted_files": 0,
+  "exit_code": 1,
+  "fixer_runs": 0,
+  "jsonl_temp": "/tmp/codex_jsonl_qci9d2hm",
+  "prompt_epoch_id": "3f418ee9720494d9293406c1324f0e8324f54ad68873ffd1d3f56b6dabac7165",
+  "rollback": false,
+  "stderr_temp": "/tmp/codex_err_uwhrra11",
+  "stdout_temp": "/tmp/codex_out_7jy3nl2f",
+  "step": "planner",
+  "success": true,
+  "transient_retries": 2,
+  "validation_codes": [],
+  "variant_id": "v1"
+}

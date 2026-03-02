@@ -1,0 +1,22 @@
+{
+  "attempt": 1,
+  "changed_bytes": 0,
+  "changed_files": 2,
+  "changed_paths": [
+    "AGENT_TASKS.md",
+    "REQUIREMENTS.md"
+  ],
+  "deleted_files": 0,
+  "exit_code": 0,
+  "fixer_runs": 0,
+  "jsonl_temp": "/tmp/codex_jsonl_gut82o0p",
+  "prompt_epoch_id": "0e0a9a8d834322d9722d2d8cb4f15a28f00b4426d0fe61b62f4d5c0d893fe500",
+  "rollback": false,
+  "stderr_temp": "/tmp/codex_err_h24353ow",
+  "stdout_temp": "/tmp/codex_out_1vyd4t36",
+  "step": "requirements",
+  "success": true,
+  "transient_retries": 0,
+  "validation_codes": [],
+  "variant_id": "v1"
+}

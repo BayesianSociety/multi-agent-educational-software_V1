@@ -1,0 +1,82 @@
+{
+  "backend": {
+    "agent_role": "Backend Dev",
+    "prompt_epoch_id": "d4a162813d2cddadd1597d572888829b26d45381758fcceb4894d3ec8cdc56b8",
+    "skill_excerpt_mode": "full",
+    "skill_hash": "35e4d5dc9a5df9df25e27f793193bb1c1165b8f0d355da8cfbc1bd66404b3db8",
+    "skill_path": ".codex/skills/backend_dev/SKILL.md",
+    "skill_used": true,
+    "variant_id": "v1",
+    "variant_source": "prompts/backend_dev/v1.txt"
+  },
+  "designer": {
+    "agent_role": "UX / Designer",
+    "prompt_epoch_id": "03130d2854f8f1b1bfd5c5e2736bc0e10f1d64418d328b106d4b24ee92bea77f",
+    "skill_excerpt_mode": "full",
+    "skill_hash": "13a7d1e8821ee34be2f8e4009b58a96d028583f10b9bbee7892d30d8b2ef293d",
+    "skill_path": ".codex/skills/ux_designer/SKILL.md",
+    "skill_used": true,
+    "variant_id": "v1",
+    "variant_source": "prompts/ux_designer/v1.txt"
+  },
+  "docs": {
+    "agent_role": "Docs Writer",
+    "prompt_epoch_id": "c7cfc89758ce43c44870fe789cbe2b2d0891a3bd87a522c21ee5f6d1d6321310",
+    "skill_excerpt_mode": "full",
+    "skill_hash": "924c54a9a97aa1ed5a08f72cefce62e2ac1abbedcfb4cacc20993e848d30cf1c",
+    "skill_path": ".codex/skills/docs_writer/SKILL.md",
+    "skill_used": true,
+    "variant_id": "v1",
+    "variant_source": "prompts/docs_writer/v1.txt"
+  },
+  "frontend": {
+    "agent_role": "Frontend Dev",
+    "prompt_epoch_id": "2855d104417e72996cb70248f1fe87b0ef3bcb08b94695ab6f1ace93e877a097",
+    "skill_excerpt_mode": "full",
+    "skill_hash": "00c6097cf07bbca5ecd9901777b70c77703183745450824cc5eb32429d960b6c",
+    "skill_path": ".codex/skills/frontend_dev/SKILL.md",
+    "skill_used": true,
+    "variant_id": "v1",
+    "variant_source": "prompts/frontend_dev/v1.txt"
+  },
+  "planner": {
+    "agent_role": "Planner",
+    "prompt_epoch_id": "3f418ee9720494d9293406c1324f0e8324f54ad68873ffd1d3f56b6dabac7165",
+    "skill_excerpt_mode": "full",
+    "skill_hash": "5f82e9b267966fe633af458c72777683469692d83b26998487a42b0560c9c2b1",
+    "skill_path": ".codex/skills/planner/SKILL.md",
+    "skill_used": true,
+    "variant_id": "v1",
+    "variant_source": "prompts/planner/v1.txt"
+  },
+  "qa": {
+    "agent_role": "QA Tester",
+    "prompt_epoch_id": "980448cb574d1e300151a2e1ed6f76bfc956c8bb9add4818cad3eb6c8661527d",
+    "skill_excerpt_mode": "full",
+    "skill_hash": "dd0bd784aa46496de2c218c14a60a2d74d2cd55970b95396ecccc6a3d7d3d23c",
+    "skill_path": ".codex/skills/qa_tester/SKILL.md",
+    "skill_used": true,
+    "variant_id": "v1",
+    "variant_source": "prompts/qa_tester/v1.txt"
+  },
+  "release_engineer": {
+    "agent_role": "Release Engineer",
+    "prompt_epoch_id": "977020964736deeab7fd1e57ccf7ea856d7da49cc9c30819b2d4919e30007136",
+    "skill_excerpt_mode": "full",
+    "skill_hash": "18e42a9941b03d7f4829ac48c3188cfcf28b84ada21852a524f56f2f9146b0c5",
+    "skill_path": ".codex/skills/release_engineer/SKILL.md",
+    "skill_used": true,
+    "variant_id": "v2",
+    "variant_source": "prompts/release_engineer/v2.txt"
+  },
+  "requirements": {
+    "agent_role": "Requirements Analyst",
+    "prompt_epoch_id": "0e0a9a8d834322d9722d2d8cb4f15a28f00b4426d0fe61b62f4d5c0d893fe500",
+    "skill_excerpt_mode": "full",
+    "skill_hash": "cd6e9a4769bd951f8b06ec2cc2e38d9d39580cea7d8fc3775b2ef24654312738",
+    "skill_path": ".codex/skills/requirements_analyst/SKILL.md",
+    "skill_used": true,
+    "variant_id": "v1",
+    "variant_source": "prompts/requirements_analyst/v1.txt"
+  }
+}

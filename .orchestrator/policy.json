@@ -1,0 +1,247 @@
+{
+  "constraint_patches": {
+    "release_engineer": [
+      "If you hit REQ_HEADING_MISSING:# Non-Goals, apply minimal corrective edits only.",
+      "If you hit REQ_HEADING_MISSING:# Scope, apply minimal corrective edits only."
+    ]
+  },
+  "feature_availability": {
+    "ask_for_approval": false,
+    "config": true,
+    "experimental_json": false,
+    "output_schema": true
+  },
+  "limits_overrides": {},
+  "max_attempts_per_step": 3,
+  "selection": {
+    "bootstrap_min_trials_per_variant": 3,
+    "commit_window_runs": 10,
+    "elim_max_failure_rate": 0.9,
+    "elim_min_mean_clean": 0.1,
+    "elim_min_trials": 6,
+    "strategy": "ucb1",
+    "ucb_c": 1.0
+  },
+  "steps": {
+    "backend_dev": {
+      "epochs": {
+        "d4a162813d2cddadd1597d572888829b26d45381758fcceb4894d3ec8cdc56b8": {
+          "commit_mode": false,
+          "commit_remaining": 0,
+          "commit_variant": "",
+          "consecutive_not_clean_best": 0,
+          "eliminated": [],
+          "initialized": true,
+          "last_rr_index": 0,
+          "variant_stats": {
+            "v1": {
+              "attempts": 1,
+              "clean_passes": 1,
+              "failures": {},
+              "passes": 1
+            },
+            "v2": {
+              "attempts": 0,
+              "clean_passes": 0,
+              "failures": {},
+              "passes": 0
+            }
+          }
+        }
+      }
+    },
+    "docs_writer": {
+      "epochs": {
+        "c7cfc89758ce43c44870fe789cbe2b2d0891a3bd87a522c21ee5f6d1d6321310": {
+          "commit_mode": false,
+          "commit_remaining": 0,
+          "commit_variant": "",
+          "consecutive_not_clean_best": 0,
+          "eliminated": [],
+          "initialized": true,
+          "last_rr_index": 0,
+          "variant_stats": {
+            "v1": {
+              "attempts": 1,
+              "clean_passes": 1,
+              "failures": {},
+              "passes": 1
+            },
+            "v2": {
+              "attempts": 0,
+              "clean_passes": 0,
+              "failures": {},
+              "passes": 0
+            }
+          }
+        }
+      }
+    },
+    "frontend_dev": {
+      "epochs": {
+        "2855d104417e72996cb70248f1fe87b0ef3bcb08b94695ab6f1ace93e877a097": {
+          "commit_mode": false,
+          "commit_remaining": 0,
+          "commit_variant": "",
+          "consecutive_not_clean_best": 0,
+          "eliminated": [],
+          "initialized": true,
+          "last_rr_index": 0,
+          "variant_stats": {
+            "v1": {
+              "attempts": 1,
+              "clean_passes": 1,
+              "failures": {},
+              "passes": 1
+            },
+            "v2": {
+              "attempts": 0,
+              "clean_passes": 0,
+              "failures": {},
+              "passes": 0
+            }
+          }
+        }
+      }
+    },
+    "planner": {
+      "epochs": {
+        "3f418ee9720494d9293406c1324f0e8324f54ad68873ffd1d3f56b6dabac7165": {
+          "commit_mode": false,
+          "commit_remaining": 0,
+          "commit_variant": "",
+          "consecutive_not_clean_best": 0,
+          "eliminated": [],
+          "initialized": true,
+          "last_rr_index": 0,
+          "variant_stats": {
+            "v1": {
+              "attempts": 1,
+              "clean_passes": 1,
+              "failures": {},
+              "passes": 1
+            },
+            "v2": {
+              "attempts": 0,
+              "clean_passes": 0,
+              "failures": {},
+              "passes": 0
+            }
+          }
+        }
+      }
+    },
+    "qa_tester": {
+      "epochs": {
+        "980448cb574d1e300151a2e1ed6f76bfc956c8bb9add4818cad3eb6c8661527d": {
+          "commit_mode": false,
+          "commit_remaining": 0,
+          "commit_variant": "",
+          "consecutive_not_clean_best": 0,
+          "eliminated": [],
+          "initialized": true,
+          "last_rr_index": 0,
+          "variant_stats": {
+            "v1": {
+              "attempts": 1,
+              "clean_passes": 1,
+              "failures": {},
+              "passes": 1
+            },
+            "v2": {
+              "attempts": 0,
+              "clean_passes": 0,
+              "failures": {},
+              "passes": 0
+            }
+          }
+        }
+      }
+    },
+    "release_engineer": {
+      "epochs": {
+        "977020964736deeab7fd1e57ccf7ea856d7da49cc9c30819b2d4919e30007136": {
+          "commit_mode": false,
+          "commit_remaining": 0,
+          "commit_variant": "",
+          "consecutive_not_clean_best": 0,
+          "eliminated": [],
+          "initialized": true,
+          "last_rr_index": 1,
+          "variant_stats": {
+            "v1": {
+              "attempts": 3,
+              "clean_passes": 0,
+              "failures": {
+                "REQ_HEADING_MISSING:# Non-Goals": 1,
+                "REQ_HEADING_MISSING:# Scope": 3
+              },
+              "passes": 0
+            },
+            "v2": {
+              "attempts": 1,
+              "clean_passes": 1,
+              "failures": {},
+              "passes": 1
+            }
+          }
+        }
+      }
+    },
+    "requirements_analyst": {
+      "epochs": {
+        "0e0a9a8d834322d9722d2d8cb4f15a28f00b4426d0fe61b62f4d5c0d893fe500": {
+          "commit_mode": false,
+          "commit_remaining": 0,
+          "commit_variant": "",
+          "consecutive_not_clean_best": 0,
+          "eliminated": [],
+          "initialized": true,
+          "last_rr_index": 0,
+          "variant_stats": {
+            "v1": {
+              "attempts": 1,
+              "clean_passes": 1,
+              "failures": {},
+              "passes": 1
+            },
+            "v2": {
+              "attempts": 0,
+              "clean_passes": 0,
+              "failures": {},
+              "passes": 0
+            }
+          }
+        }
+      }
+    },
+    "ux_designer": {
+      "epochs": {
+        "03130d2854f8f1b1bfd5c5e2736bc0e10f1d64418d328b106d4b24ee92bea77f": {
+          "commit_mode": false,
+          "commit_remaining": 0,
+          "commit_variant": "",
+          "consecutive_not_clean_best": 0,
+          "eliminated": [],
+          "initialized": true,
+          "last_rr_index": 0,
+          "variant_stats": {
+            "v1": {
+              "attempts": 1,
+              "clean_passes": 1,
+              "failures": {},
+              "passes": 1
+            },
+            "v2": {
+              "attempts": 0,
+              "clean_passes": 0,
+              "failures": {},
+              "passes": 0
+            }
+          }
+        }
+      }
+    }
+  },
+  "version": 1
+}

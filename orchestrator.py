@@ -522,6 +522,10 @@ class Orchestrator:
         brief = self.brief_excerpt()
         manifest = self.read_manifest_snapshot()
         allowlist_text = "\n".join(f"- {p}" for p in step.allowlist)
+        validator_contract = self.validator_contract_lines(step.validator_scope)
+        validator_text = "\n".join(f"- {line}" for line in validator_contract) if validator_contract else "- Follow validator checks for this scope."
+        constraint_patches = self.policy.get("constraint_patches", {}).get(step.name, [])
+        constraint_text = "\n".join(f"- {line}" for line in constraint_patches) if constraint_patches else "- [none]"
 
         prompt = f"""
 You are the specialist role: {step.role}
@@ -545,11 +549,54 @@ Instructions:
 - Modify only allowlisted paths for this step.
 - Allowed paths:
 {allowlist_text}
+- Validator contract (must satisfy exactly):
+{validator_text}
+- Prior observed failures to correct in this step:
+{constraint_text}
 - Never modify /.orchestrator/**
 - Never modify .git/**
 - Do not claim completion; just make filesystem changes.
 """.strip()
         return prompt
+
+    def validator_contract_lines(self, scope: str) -> List[str]:
+        lines: List[str] = []
+        common_content_scopes = {"release", "requirements", "designer", "frontend", "backend", "qa", "docs", "final"}
+
+        if scope in common_content_scopes:
+            lines.extend(
+                [
+                    "REQUIREMENTS.md must include exact headings: # Overview, # Scope, # Non-Goals, # Acceptance Criteria, # Risks",
+                    "TEST.md must include exact headings: # How to run tests and # Environments, and contain a fenced code block with executable commands",
+                    "AGENT_TASKS.md must include # Agent Tasks and sections ## Requirements, ## Designer, ## Frontend, ## Backend, ## QA, plus a Project Brief reference",
+                    "README.md and RUNBOOK.md must each mention frontend, backend, and test run instructions",
+                    "RUNBOOK.md must include troubleshooting/troubleshoot content and the exact phrase deterministic recovery",
+                ]
+            )
+
+        if scope == "planner":
+            lines.extend(
+                [
+                    ".pipeline_plan.json must exist as valid JSON object with keys: roles, required_outputs, dependencies",
+                    "If schema mode is enabled, .pipeline_plan_schema.json must exist",
+                ]
+            )
+        if scope in {"qa", "final"}:
+            lines.append("Commands extracted from TEST.md must execute successfully (exit code 0)")
+        if scope in {"docs", "final"} and self.backend_required:
+            lines.append("Frontend files must contain backend API integration evidence for /api/levels")
+        if self.design_mode == "B":
+            lines.append("AGENTS.md must include headings # Global Rules, # File Boundaries, # How to Run Tests and the rule Do not modify /.orchestrator/**")
+        if self.backend_required:
+            lines.extend(
+                [
+                    "docker-compose.yml must exist",
+                    ".env.example must exist",
+                    ".gitignore must include '.env'",
+                ]
+            )
+        lines.append("PROJECT_BRIEF.md must include Layer 0, Layer 1, Layer 2, Target platform, Audience, MVP, Architecture constraints")
+        return lines
 
     # ---------- Git and snapshots ----------
     def require_git_repo(self) -> None:

@@ -1,0 +1,19 @@
+{
+  "attempt": 1,
+  "changed_bytes": 0,
+  "changed_files": 0,
+  "changed_paths": [],
+  "deleted_files": 0,
+  "exit_code": 1,
+  "fixer_runs": 0,
+  "jsonl_temp": "/tmp/codex_jsonl_3ybu3sg4",
+  "prompt_epoch_id": "977020964736deeab7fd1e57ccf7ea856d7da49cc9c30819b2d4919e30007136",
+  "rollback": false,
+  "stderr_temp": "/tmp/codex_err_hsk8fkt5",
+  "stdout_temp": "/tmp/codex_out_7oz3goxz",
+  "step": "release_engineer",
+  "success": true,
+  "transient_retries": 2,
+  "validation_codes": [],
+  "variant_id": "v2"
+}

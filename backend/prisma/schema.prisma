@@ -8,13 +8,16 @@ datasource db {
 }
 
 model Level {
-  id        Int    @id @default(autoincrement())
-  title     String
-  narrative String
-  data      String
+  id           Int    @id
+  title        String
+  narrative    String
+  startX       Int
+  goalX        Int
+  blockedTiles String
 }
 
 model Progress {
-  id            Int @id @default(autoincrement())
-  unlockedLevel Int
+  id            Int      @id @default(1)
+  unlockedLevel Int      @default(1)
+  updatedAt     DateTime @updatedAt
 }

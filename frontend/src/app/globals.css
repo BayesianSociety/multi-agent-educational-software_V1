@@ -1,0 +1,186 @@
+:root {
+  --bg: #f4f8ef;
+  --panel: #ffffff;
+  --ink: #1e2a1b;
+  --accent: #1f7a4f;
+  --focus: #ff7a00;
+  --danger: #8a1f1f;
+  --muted: #4b5d49;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: linear-gradient(180deg, #e0efd6 0%, var(--bg) 100%);
+  color: var(--ink);
+  font-family: "Trebuchet MS", "Verdana", sans-serif;
+  font-size: 18px;
+  line-height: 1.4;
+}
+
+.shell {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+
+h1,
+h2 {
+  margin: 0;
+}
+
+.subtitle {
+  margin: 0;
+  color: var(--muted);
+}
+
+.panel {
+  border: 2px solid #c9d9bd;
+  border-radius: 10px;
+  background: var(--panel);
+  padding: 12px;
+}
+
+.actions,
+.levelGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+button {
+  border: 2px solid #325736;
+  border-radius: 8px;
+  background: #f8fff4;
+  color: var(--ink);
+  padding: 8px 10px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+button:hover:enabled {
+  background: #e5f7d9;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+button:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.levelButton.active {
+  border-color: var(--accent);
+  background: #dff8ea;
+}
+
+.narration,
+.status,
+.smallHelp {
+  margin: 8px 0 0;
+}
+
+.workspaceList {
+  margin: 8px 0 0;
+  padding-left: 22px;
+  display: grid;
+  gap: 6px;
+}
+
+.workspaceList button {
+  width: 100%;
+  text-align: left;
+}
+
+.workspaceList button.current {
+  border-color: var(--accent);
+  background: #d4f3e1;
+  font-weight: 700;
+}
+
+.gameBoard {
+  margin-top: 8px;
+  border: 2px solid #8ea386;
+  border-radius: 8px;
+  aspect-ratio: 3288 / 1770;
+  width: 100%;
+  max-height: 420px;
+  position: relative;
+  background-color: #fbfff8;
+  background-image: url("/background.png");
+  background-size: cover;
+  background-position: center;
+  overflow: hidden;
+}
+
+.dog,
+.bone,
+.blocked,
+.actionMarker {
+  position: absolute;
+  top: 76%;
+  transform: translate(-50%, -50%);
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.token {
+  backdrop-filter: blur(2px);
+}
+
+.dog {
+  background: #ffe2a9;
+  border: 2px solid #9a6612;
+  transition: left 0.2s linear;
+}
+
+.bone {
+  left: 100%;
+  background: #fffdf5;
+  border: 2px solid #8b7c58;
+}
+
+.blocked {
+  background: #ffd2d2;
+  border: 2px solid var(--danger);
+}
+
+.actionMarker {
+  top: 16%;
+  min-width: 30px;
+  text-align: center;
+  background: rgba(16, 48, 84, 0.82);
+  color: #fff;
+  border: 2px solid #bbdcff;
+  padding: 4px 6px;
+}
+
+.actionMarker.active {
+  background: #ffcf4a;
+  color: #4a2f00;
+  border-color: #fff2bf;
+}
+
+@media (max-width: 700px) {
+  body {
+    font-size: 16px;
+  }
+
+  .shell {
+    padding: 10px;
+  }
+
+  .gameBoard {
+    max-height: none;
+  }
+}
