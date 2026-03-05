@@ -25,3 +25,54 @@ Correct the following:
      -) at Prompt_4_separate_pipeline_engine_from_project_pack.txt:45 and
      Prompt_4_separate_pipeline_engine_from_project_pack.txt:55. This can cause user-facing startup failures
      depending on CLI version.
+	 
+› When the final orchestrotor.py with design B is run, the application is hardly usable. It's ugly, and does not
+  write scores or selections back to the database. It's very basic. Explain what must be improved for the
+  orchestrator to make an industry grade appliaction in the end. What to add to the prompt creating the
+  orchestrator, or what to add to the individual agent's prompts or what to add somewhere else.
+  
+• You’re seeing a predictable outcome of weak gates plus generic role prompts.
+
+  Why current runs produce a basic app
+
+  1. The system mostly rewards “validator pass” on structure, not product quality.
+  2. Role prompts are too generic, so agents optimize for minimum edits.
+  3. Tests don’t enforce core product behavior like score persistence and polished UX.
+  4. Design B tuning improves prompts for pass-rate, not for user experience or business outcomes.
+
+  What to add to the orchestrator-creation prompt (Prompt_4_separate_pipeline_engine_from_project_pack.txt)
+
+  1. Add hard feature gates (not optional scoring points):
+     MUST fail if score persistence API, DB write path, and frontend integration are missing.
+  2. Add mandatory runtime acceptance tests:
+     MUST run e2e flow: start level -> submit score -> reload -> score persists from DB.
+  3. Add UX quality gates:
+     MUST fail if frontend uses placeholder layout/colors/unstyled controls; require design tokens, responsive
+     layout, and accessibility checks.
+  4. Add DB contract gates:
+     MUST validate Prisma schema includes Progress/Score tables, migration exists, and write/read endpoints are
+     covered by tests.
+  5. Change Design B eval scoring:
+     No score award for docs/existence unless functional tests pass.
+  6. Add “minimum implementation depth” checks:
+     Fail if frontend/backend files are placeholders or below functional thresholds.
+  7. Add post-run quality stage:
+     product_acceptance step after QA; pipeline fails unless product-level acceptance tests pass.
+
+  What to add to individual role prompts (/prompts/*)
+
+  1. frontend_dev: require production-quality UI, consistent design system, mobile support, loading/error/empty
+     states, and backend-bound score/progress screens.
+  2. backend_dev: require schema, migrations, transactional writes, validation, and endpoints for score/progress
+     CRUD.
+  3. qa_tester: require integration + e2e tests that prove DB persistence and API/frontend wiring.
+  4. ux_designer: require concrete visual spec (tokens, spacing, typography, components), not just notes.
+  5. docs_writer: require API contract tables and runbook verification steps for persistence and recovery.
+
+  What to add elsewhere
+
+  1. Strengthen PROJECT_BRIEF.md with explicit “industry-grade” acceptance criteria:
+     polished UI, persistent progress/scores, error handling, responsive, a11y, performance budget.
+  2. Expand tests/ with contract + integration + e2e checks tied to those criteria.
+  3. Update AGENT_TASKS.md to include concrete deliverables per role, not abstract tasks.
+  4. Add CI workflow that blocks merge unless full acceptance suite passes.
