@@ -37,6 +37,10 @@
 - Level runner executes blocks deterministically and highlights current block during execution.
 - Level 1 can be solved with a small block sequence (Move/Jump/Move...) to reach the bone.
 - The app stores unlocked levels in SQLite and restores progress on refresh.
+- Level progress and score writes MUST persist in SQLite and remain correct after page refresh and backend restart.
+- Frontend MUST create/read progress and score via backend API calls (no mock-only persistence path).
+- Deterministic tests MUST include at least one full persistence flow: write progress/score -> reload/re-fetch -> verify persisted values.
+- UI MUST include responsive behavior, visible focus states, and explicit loading/error/empty states for API-driven views.
 - Tests run deterministically and exit with code 0.
 
 # Layer 2 — Architecture constraints
@@ -48,10 +52,17 @@
 - **Level format:** Store levels in SQLite only.
 - **Execution model:** Compile blocks into a simple internal instruction list, then interpret step-by-step deterministically.
 - **Persistence:** Store user progress in SQLite (no accounts required).
+- **Persistence scope:** Persist BOTH level unlock progress and per-level scores in SQLite.
 - **Testing:** must run offline and deterministically. Provide a deterministic test command in `TEST.md` and ensure it exits with code 0. Tests MUST spin up SQLite locally (docker compose) or use a deterministic test DB container.
 - **Security:** No secrets committed. Provide `.env.example` and keep real secrets out of the repo.
 - **Frontend-backend integration:** Since backend is REQUIRED, frontend runtime flow MUST call backend API endpoint(s); backend must not be unused.
 - **Required backend endpoints (minimum):** `GET /health`, `GET /api/levels`, `GET /api/levels/:id`.
+- **Required persistence endpoints (minimum):**
+  - `GET /api/progress`
+  - `POST /api/progress`
+  - `GET /api/scores/:levelId`
+  - `POST /api/scores`
+- **Data integrity requirement:** persistence endpoints MUST write to and read from SQLite (no in-memory-only path for production flow).
 - **Run documentation:** deliver exact startup commands for frontend, backend, tests, and optional docker compose usage in project docs.
 
 
@@ -73,3 +84,4 @@
 - Friendly, bright, kid-safe visuals.
 - Using `background.png` as a mandatory Barbie-themed background is compulsory, and all actor positioning/sizing plus Move/Jump step distances must be aligned to that background’s scale and layout.
 - Simple animations: dog walks, jumps; bone sparkles on success.
+- Avoid placeholder UI: use a consistent design token set (colors/spacing/typography) and production-quality component styling.

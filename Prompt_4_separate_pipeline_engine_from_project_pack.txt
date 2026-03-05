@@ -212,6 +212,7 @@ Suggested roles:
 3) Frontend Dev  [Layer 2 implementation + Layer 3 UI mechanics; must conform to Layer 0–2 brief]
 4) Backend Dev  [Layer 2: ONLY if architecture constraints require it; otherwise keep minimal placeholder]
 5) QA Tester  [Layer 2: deterministic tests + test command wiring; validates Layer 1 acceptance criteria]
+5.5) Product Acceptance (required)  [Layer 1/2/3 quality gate: fail run if product behavior/UX baseline is not met]
 6) Docs Writer  [Layer 1/2 documentation coherence; must not alter locked brief]
 
 [Design B] Additional steps (as needed)  [Layer N/A (meta workflow only)]
@@ -363,6 +364,28 @@ README.md and RUNBOOK.md validators:  [Layer 1/2]
   - frontend/backend integration evidence MUST exist (for example frontend calls backend endpoint(s)).
   - missing evidence is a deterministic validation failure code: BACKEND_UNUSED.
 
+[Industry-grade product acceptance validators (required)]
+- The orchestrator MUST run a dedicated Product Acceptance gate after QA.
+- The Product Acceptance gate MUST fail deterministically if any required behavioral contract is missing.
+- Required deterministic failure codes (minimum):
+  - `PERSISTENCE_MISSING`: progress/score persistence write+read path is absent.
+  - `E2E_MISSING`: no deterministic integration/e2e test covering save -> reload -> persisted readback.
+  - `PLACEHOLDER_IMPL`: frontend/backend implementation is placeholder-only or scaffold-only.
+  - `UX_BASELINE_FAIL`: required UX baseline contracts are not present.
+- Minimum Product Acceptance checks:
+  - Backend exposes required persistence endpoints from the locked project brief.
+  - Frontend runtime uses backend persistence endpoints (not stubbed local-only fallback).
+  - SQLite persistence schema + migration artifacts exist when DB is required.
+  - Deterministic test suite includes one end-to-end persistence flow:
+    - submit progress/score
+    - reload or re-fetch state
+    - verify persisted value is returned from backend/DB
+  - UI baseline checks include:
+    - responsive layout support
+    - loading + error + empty states
+    - visible keyboard focus indicators
+    - non-placeholder design tokens/styles present.
+
 Test command extraction (deterministic):  [Layer 2]
 [DEFAULT MODE — original behavior]
 - Take the FIRST fenced code block under "# How to run tests" in TEST.md
@@ -513,9 +536,10 @@ Selection determinism requirements:
 - Hard invalidation: if any hard invariant fails, score = -1 (invalid run)
 - Otherwise:
   score = 0
-  +40 if all required files/dirs exist (including Design B artifacts)
-  +30 if all content validators pass
-  +30 if tests pass (exit code 0)
+  +10 if all required files/dirs exist (including Design B artifacts)
+  +20 if all content validators pass
+  +40 if deterministic tests pass (exit code 0)
+  +30 if Product Acceptance gate passes (industry-grade behavior/UX contracts met)
   -5  per retry beyond the first attempt across all steps (total retries)
   -10 per fixer run executed
   -1  per changed file above 20 total
@@ -527,6 +551,10 @@ Selection determinism requirements:
 - Must create:
   - /prompts/<agent>/*.txt (2–5 variants per agent)
   - /.codex/skills/<agent>/SKILL.md (YAML front matter + body)
+- Placeholder-only prompt/skill content is forbidden:
+  - each role prompt variant MUST include concrete role deliverables, explicit file targets, and validator-linked constraints
+  - each role skill body MUST include actionable implementation guidance (not only generic safety text)
+- Missing concrete role guidance MUST fail with deterministic error code: `PROMPT_QUALITY_INSUFFICIENT`.
 - Must not modify any other path.
 
 [Design B] Prompt Tuner loop (eval-gated)  [Layer N/A (meta)]
