@@ -76,3 +76,41 @@ Correct the following:
   2. Expand tests/ with contract + integration + e2e checks tied to those criteria.
   3. Update AGENT_TASKS.md to include concrete deliverables per role, not abstract tasks.
   4. Add CI workflow that blocks merge unless full acceptance suite passes.
+  
+If those tests pass, you can call it high-grade for MVP. If not, iterate on failing roles/prompts.
+If not, then which files am I supposed to change?
+ 
+• Change files in this order.
+
+  1. Primary control files (always)
+
+  - Prompt_4_separate_pipeline_engine_from_project_pack.txt
+  - Prompt_4_project_brief.txt
+
+  2. Role prompt/skill libraries (after generation in Design B)
+
+  - prompts/<role>/v1.txt
+  - prompts/<role>/v2.txt
+  - /.codex/skills/<role>/SKILL.md
+    Use:
+  - Next_prompts.md
+  - Next_skills.md
+
+  3. Generated orchestrator logic (if gates are still weak)
+
+  - orchestrator.py
+    Tighten validators/error codes/scoring for persistence, e2e, and UX baseline.
+
+  4. Generated tests (if behavior still slips through)
+
+  - tests/test_frontend_contract.py
+  - tests/test_backend_contract.py
+  - tests/test_smoke.py
+  - TEST.md
+    Add strict behavior checks (write/reload/read persistence, API/runtime coupling, non-placeholder UI).
+
+  5. Generated product code (if tests fail on real behavior)
+
+  - frontend/**
+  - backend/**
+  - backend/prisma/schema.prisma (+ migrations)
