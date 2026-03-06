@@ -1,0 +1,19 @@
+Read complete. I finished the first execution pass of your spec and implemented the orchestrator baseline.
+
+Created:
+- [orchestrator.py](/home/postnl/multi-agent-educational-software_V1/orchestrator.py)
+- [ARCHITECTURE_PROMPTS.md](/home/postnl/multi-agent-educational-software_V1/ARCHITECTURE_PROMPTS.md)
+
+What’s implemented in `orchestrator.py`:
+- Deterministic multi-step `codex exec` orchestration with per-step allowlists and bounded retries.
+- Codex run-window boundary enforcement with pre/post snapshots, `.git` integrity checks, forbidden path checks, path normalization/symlink safety, and deterministic rollback (including new files).
+- Deterministic validators (required files/dirs, planner JSON checks, content heading checks, infra checks, brief/config checks, ownership checks, product acceptance checks, and deterministic test command extraction).
+- Deterministic policy state in `/.orchestrator/policy.json` with variant stats and constraint patches.
+- Deterministic prompt variant loading/selection (bootstrap + `ucb1` / `explore_then_commit` / `rr_elimination`), prompt epoch hashing, skill injection, and `prompt_map.json` logging.
+- Design B toggles (`--design-b`) for prompt/skill paths and quality checks.
+
+Verification run:
+- `python3 -m py_compile orchestrator.py` passed.
+- `python3 orchestrator.py --help` passed.
+
+If you want, next I can run a strict gap pass against every single line-item in your spec and patch anything still missing.
