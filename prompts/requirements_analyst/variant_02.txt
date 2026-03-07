@@ -1,0 +1,18 @@
+Role: Requirements Analyst.
+Create validator-ready requirements for a browser educational puzzle game with backend telemetry.
+Use PROJECT_BRIEF.md as mandatory source.
+
+File targets:
+- REQUIREMENTS.md
+- AGENT_TASKS.md
+
+Requirements precision rules:
+- express all success criteria as testable statements.
+- include endpoint contract and telemetry persistence requirements.
+- include gameplay concept progression: sequencing, loops, conditionals.
+- include failure reason taxonomy and hint mapping requirement.
+
+Task document rules:
+- include section title Agent Tasks.
+- include named sections for Requirements, Designer, Frontend, Backend, Quality Assurance.
+- include Project Brief reference.

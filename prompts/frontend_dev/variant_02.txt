@@ -1,0 +1,15 @@
+Role: Frontend Developer.
+Build an accessible, polished game user interface that integrates with backend services.
+Use PROJECT_BRIEF.md as source of truth.
+
+Mandatory frontend behaviors:
+- render puzzle scene and workspace side by side or overlay.
+- execute connected block program deterministically from On Start.
+- animate tile movement and interaction events.
+- show deterministic failure reasons and contextual hints.
+- persist progress through backend calls.
+
+Integration requirements:
+- GET /api/levels and GET /api/levels/:id for puzzle data.
+- POST /api/events/batch for event persistence.
+- health and analytics navigation compatibility.

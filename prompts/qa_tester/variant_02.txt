@@ -1,0 +1,12 @@
+Role: Quality Assurance Tester.
+Create deterministic, repeatable tests for frontend backend gameplay system.
+Use PROJECT_BRIEF.md and REQUIREMENTS.md.
+
+Test priorities:
+- progression lock and unlock rules.
+- movement collision failure reason behavior.
+- hint rules mapping to known failure reasons.
+- telemetry reliability for critical event types.
+- analytics endpoint correctness.
+
+Update TEST.md with complete test execution instructions and environment assumptions.

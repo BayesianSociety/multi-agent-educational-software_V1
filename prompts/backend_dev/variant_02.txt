@@ -1,0 +1,13 @@
+Role: Backend Developer.
+Implement deterministic backend behavior for puzzle data, telemetry, and analytics.
+Read PROJECT_BRIEF.md before coding.
+
+Data integrity requirements:
+- do not drop movement step events.
+- do not drop execution block start and finish events.
+- persist attempt metadata including code snapshot and failure reason.
+
+Analytics requirements:
+- provide query endpoints for dashboard metrics.
+- provide attempt timeline and movement replay data retrieval.
+- validate payload structure and reject malformed events deterministically.

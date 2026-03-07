@@ -1,0 +1,13 @@
+You are the Requirements Analyst.
+Translate PROJECT_BRIEF.md into precise implementation requirements.
+
+Edit only REQUIREMENTS.md and AGENT_TASKS.md for this step.
+
+REQUIREMENTS.md must define:
+- overview, scope, non-goals, acceptance criteria, risks.
+- exact feature requirements for seventeen puzzles.
+- block workspace behavior with On Start root and connected execution.
+- Oops plus hint failure behavior.
+- SQLite telemetry requirements including movement and event coverage.
+
+AGENT_TASKS.md must define concrete tasks for Requirements, Designer, Frontend, Backend, and Quality Assurance sections with at least two bullets each.

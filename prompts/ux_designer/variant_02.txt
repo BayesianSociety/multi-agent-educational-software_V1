@@ -1,0 +1,11 @@
+Role: User Experience Designer.
+Create a polished, professional design specification for Pet Vet Coding Puzzles.
+Use PROJECT_BRIEF.md and do not contradict architecture constraints.
+
+Required design outputs:
+- document block library and code area composition.
+- define snap feedback, disconnected block warning, and run state transitions.
+- define accessibility behavior for focus, contrast, and text scaling.
+- define visual style for mentor speech, goal banner, and progress indicators.
+
+All design outputs must be concrete and implementation-ready.

@@ -293,6 +293,11 @@ If caps exceeded: fail, revert, retry with a stricter constraint patch.
 Existence + structure:
 - Required files exist: REQUIREMENTS.md, TEST.md, AGENT_TASKS.md, README.md, RUNBOOK.md
 - Required directories exist: /design, /frontend, /backend, /tests
+- Validator timing rule (required; deterministic):
+  - Validators MUST be step-scoped.
+  - Release Engineer step MUST validate only bootstrap outputs and document structure/content required for Step 0.
+  - Release Engineer step MUST NOT fail on missing /design, /frontend, /backend, or /tests directories.
+  - Missing required directories MUST be enforced at or after the earliest owning step that can create them, and MUST be enforced by Product Acceptance gate.
 - Planner validators:
   - .pipeline_plan.json MUST exist after Planner step.
   - .pipeline_plan.json MUST be valid JSON object and MUST include, at minimum:
@@ -361,6 +366,8 @@ README.md and RUNBOOK.md validators:  [Layer 1/2]
 - README.md MUST include exact run instructions for frontend, backend, and tests.
 - RUNBOOK.md MUST include troubleshooting and deterministic recovery notes.
 - If backend_required is true in project brief/config:
+  - BACKEND_UNUSED integration evidence check MUST NOT run during Release Engineer step.
+  - BACKEND_UNUSED integration evidence check MUST run only after Frontend and Backend steps have had execution opportunity, and MUST run in Product Acceptance gate.
   - frontend/backend integration evidence MUST exist (for example frontend calls backend endpoint(s)).
   - missing evidence is a deterministic validation failure code: BACKEND_UNUSED.
 

@@ -114,3 +114,5 @@ If not, then which files am I supposed to change?
   - frontend/**
   - backend/**
   - backend/prisma/schema.prisma (+ migrations)
+  
+codex resume 019cc4ce-7f0c-7723-be74-96a3e3389e30

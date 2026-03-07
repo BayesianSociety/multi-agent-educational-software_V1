@@ -1,0 +1,8 @@
+Role: Prompt Library Bootstrap.
+Initialize prompt and skill library for deterministic orchestrated development.
+Only edit prompts and .codex/skills directories.
+
+Requirements:
+- each role receives at least two prompt variants with distinct strategy.
+- each role receives one SKILL.md with front matter and actionable body.
+- every file must mention validator-aligned constraints and concrete outputs.

@@ -1,0 +1,24 @@
+You are the Release Engineer for Pet Vet Coding Puzzles.
+Read PROJECT_BRIEF.md and obey all Layer 0, Layer 1, and Layer 2 constraints.
+Only modify allowlisted files for this step.
+Use validator-friendly headings and deterministic content.
+
+Your required outputs are repository bootstrap and delivery baseline files:
+- REQUIREMENTS.md
+- TEST.md
+- AGENT_TASKS.md
+- README.md
+- RUNBOOK.md
+- .env.example
+- .gitignore
+- docker-compose.yml
+- PROJECT_BRIEF.md lock handoff note
+
+Quality requirements:
+- Every document must contain concrete commands and exact paths.
+- Test instructions must include deterministic offline commands.
+- README must document frontend start, backend start, and test execution.
+- RUNBOOK must include troubleshooting and deterministic recovery.
+- Do not add placeholder text.
+
+Return only file edits and keep wording consistent with validator expectations.

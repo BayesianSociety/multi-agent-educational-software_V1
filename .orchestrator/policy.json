@@ -1,0 +1,79 @@
+{
+  "bootstrap_min_trials_per_variant": 3,
+  "commit_window_runs": 10,
+  "constraint_patches": {
+    "release_engineer": [
+      "if BACKEND_UNUSED: tighten constraints for release_engineer",
+      "if BRIEF_YAML_INVALID: tighten constraints for release_engineer",
+      "if MISSING_DIR_backend: tighten constraints for release_engineer",
+      "if MISSING_DIR_design: tighten constraints for release_engineer",
+      "if MISSING_DIR_frontend: tighten constraints for release_engineer",
+      "if MISSING_DIR_tests: tighten constraints for release_engineer",
+      "if REQUIREMENTS_HEADING_MISSING_Acceptance_Criteria: tighten constraints for release_engineer",
+      "if REQUIREMENTS_HEADING_MISSING_NonGoals: tighten constraints for release_engineer"
+    ]
+  },
+  "elim_max_failure_rate": 0.9,
+  "elim_min_mean_clean": 0.1,
+  "elim_min_trials": 6,
+  "roles": {
+    "release_engineer": {
+      "6a80fa4dfc0abdc9085afbc584e28c0e59ea61b07e0c2feeeb071cf23e88e1c7": {
+        "commit": {
+          "active": false,
+          "consecutive_not_clean": 0,
+          "remaining": 0,
+          "target": ""
+        },
+        "eliminated": [],
+        "last_rr_index": 0,
+        "variants": {
+          "variant_01.txt": {
+            "attempts": 2,
+            "clean_passes": 0,
+            "failures": {
+              "AGENTS_MISSING": 1,
+              "BACKEND_UNUSED": 2,
+              "BRIEF_YAML_INVALID": 1,
+              "MISSING_DIR_backend": 2,
+              "MISSING_DIR_design": 2,
+              "MISSING_DIR_frontend": 2,
+              "MISSING_DIR_tests": 2,
+              "REQUIREMENTS_HEADING_MISSING_Acceptance_Criteria": 2,
+              "REQUIREMENTS_HEADING_MISSING_NonGoals": 2,
+              "REQUIREMENTS_HEADING_MISSING_Overview": 2,
+              "REQUIREMENTS_HEADING_MISSING_Risks": 2,
+              "REQUIREMENTS_HEADING_MISSING_Scope": 2,
+              "TASKS_HEADER_MISSING": 2,
+              "TASKS_PROJECT_BRIEF_REF_MISSING": 2,
+              "TASKS_SECTION_MISSING_BACKEND": 1,
+              "TASKS_SECTION_MISSING_DESIGNER": 2,
+              "TASKS_SECTION_MISSING_FRONTEND": 1,
+              "TASKS_SECTION_MISSING_QA": 1,
+              "TASKS_SECTION_MISSING_REQUIREMENTS": 1,
+              "TEST_HEADING_MISSING_Environments": 2,
+              "TEST_HEADING_MISSING_How_to_run_tests": 2
+            },
+            "passes": 0
+          },
+          "variant_02.txt": {
+            "attempts": 1,
+            "clean_passes": 0,
+            "failures": {
+              "BACKEND_UNUSED": 1,
+              "MISSING_DIR_backend": 1,
+              "MISSING_DIR_design": 1,
+              "MISSING_DIR_frontend": 1,
+              "MISSING_DIR_tests": 1
+            },
+            "passes": 0
+          }
+        }
+      }
+    }
+  },
+  "selection_strategy": "ucb1",
+  "step_limits": {},
+  "ucb_c": 1.0,
+  "unavailable_codex_flags": []
+}

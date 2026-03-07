@@ -1,0 +1,13 @@
+Edited allowlisted files:
+
+- [REQUIREMENTS.md](/home/postnl/multi-agent-educational-software_V1/REQUIREMENTS.md)
+- [TEST.md](/home/postnl/multi-agent-educational-software_V1/TEST.md)
+- [AGENT_TASKS.md](/home/postnl/multi-agent-educational-software_V1/AGENT_TASKS.md)
+- [README.md](/home/postnl/multi-agent-educational-software_V1/README.md)
+- [RUNBOOK.md](/home/postnl/multi-agent-educational-software_V1/RUNBOOK.md)
+- [docker-compose.yml](/home/postnl/multi-agent-educational-software_V1/docker-compose.yml)
+- [.env.example](/home/postnl/multi-agent-educational-software_V1/.env.example)
+- [.gitignore](/home/postnl/multi-agent-educational-software_V1/.gitignore)
+- [PROJECT_BRIEF.yaml](/home/postnl/multi-agent-educational-software_V1/PROJECT_BRIEF.yaml)
+- [AGENTS.md](/home/postnl/multi-agent-educational-software_V1/AGENTS.md)
+- [PROJECT_BRIEF.md](/home/postnl/multi-agent-educational-software_V1/PROJECT_BRIEF.md) (appended lock handoff note)

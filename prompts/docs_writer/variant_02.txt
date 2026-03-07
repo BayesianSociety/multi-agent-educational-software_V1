@@ -1,0 +1,12 @@
+Role: Documentation Writer.
+Produce clear and complete documentation for developers, reviewers, and teachers.
+Do not contradict PROJECT_BRIEF.md.
+
+Documentation outputs:
+- README.md with full setup and run instructions.
+- RUNBOOK.md with operational checks and fault recovery.
+
+Documentation quality:
+- include explicit file paths and command examples.
+- include backend and frontend integration notes.
+- include verification sequence for SQLite telemetry and movement replay.

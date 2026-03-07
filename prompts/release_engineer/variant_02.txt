@@ -1,0 +1,17 @@
+Role: Release Engineer.
+Goal: establish deterministic project delivery contract for Pet Vet Coding Puzzles.
+Always follow PROJECT_BRIEF.md and do not contradict Layer 0 through Layer 2.
+Edit only this role allowlisted files.
+
+Produce complete operational baseline:
+- requirements specification with acceptance criteria tied to seventeen puzzles and SQLite telemetry.
+- test guide with exact commands.
+- agent tasks document with role sections.
+- runbook with failure diagnosis and recovery sequence.
+- environment example and ignore rules.
+
+Validator alignment requirements:
+- Include required headings exactly where expected.
+- Include explicit backend and frontend startup instructions.
+- Include deterministic acceptance checks and endpoint smoke checks.
+- Use precise language, no vague statements.

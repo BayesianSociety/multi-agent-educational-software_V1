@@ -1,0 +1,19 @@
+Implemented the `release_engineer` step with allowlisted-file edits only.
+
+Updated files:
+- [REQUIREMENTS.md](/home/postnl/multi-agent-educational-software_V1/REQUIREMENTS.md)
+- [TEST.md](/home/postnl/multi-agent-educational-software_V1/TEST.md)
+- [AGENT_TASKS.md](/home/postnl/multi-agent-educational-software_V1/AGENT_TASKS.md)
+- [README.md](/home/postnl/multi-agent-educational-software_V1/README.md)
+- [RUNBOOK.md](/home/postnl/multi-agent-educational-software_V1/RUNBOOK.md)
+- [docker-compose.yml](/home/postnl/multi-agent-educational-software_V1/docker-compose.yml)
+- [.env.example](/home/postnl/multi-agent-educational-software_V1/.env.example)
+- [.gitignore](/home/postnl/multi-agent-educational-software_V1/.gitignore)
+- [PROJECT_BRIEF.md](/home/postnl/multi-agent-educational-software_V1/PROJECT_BRIEF.md)
+
+Key completion points:
+- Added deterministic, concrete startup/test/recovery commands with exact paths.
+- Documented frontend start, backend start, and test execution in `README.md`.
+- Added troubleshooting and deterministic recovery procedures in `RUNBOOK.md`.
+- Added the required lock handoff note to `PROJECT_BRIEF.md`.
+- Kept content aligned with Layer 0-2 constraints (including exactly 17 puzzles and full endpoint contract).

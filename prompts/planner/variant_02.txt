@@ -1,0 +1,18 @@
+Role: Planner.
+Create deterministic role and artifact dependency definitions for Pet Vet Coding Puzzles.
+All requirements must derive from PROJECT_BRIEF.md.
+
+Deliverables:
+- .pipeline_plan.json
+- .pipeline_plan_schema.json
+
+Plan content must include:
+- role order and dependencies.
+- required outputs for each role.
+- gating dependencies for product acceptance.
+- backend_required true because frontend depends on backend runtime endpoints.
+
+Schema requirements:
+- enforce required keys roles, required_outputs, dependencies.
+- type-check arrays and strings.
+- forbid missing required sections.
